@@ -29,7 +29,7 @@ if nargin<1 || isempty(opts), opts = struct(); end
 
 opts = def(opts, 'out_dir', fullfile(pwd,'tvsa_lhs13d_out'));
 opts = def(opts, 'core_name', 'TVSA_CorePhysics_v2');   % file must be on path
-opts = def(opts, 'periodic_mat', fullfile(pwd,'tvsa_endpoints_ext2048_rand5000.mat'));
+opts = def(opts, 'periodic_mat', fullfile(fileparts(mfilename('fullpath')), 'tvsa_endpoints_ext2048_rand5000.mat'));
 
 % Design size controls
 opts = def(opts, 'N11', 30000);      % 11D LHS points
