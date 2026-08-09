@@ -11,7 +11,8 @@ Physics-based dynamic reduced-order model (ROM), surrogate modeling, and optimiz
 - `scripts/`
   - `TVSA_Fig2.m`: MATLAB script for reproducing Figure 2.
   - `TVSA_FigS4.m`: MATLAB script for reproducing Supplementary Figure S4.
-  - `TVSA_generate_200k_dataset.m`: MATLAB script for generating the ROM-based simulation dataset.
+  - `TVSA_make_LHS_13D_dataset.m`: MATLAB script for generating the 120,000-case cycle-resolved ROM dataset.
+  - `tvsa_endpoints_ext2048_rand5000.mat`: periodic-state results used to define the feasible initial CO2 and H2O sorbent-state domain for dataset generation.
   - `main_c_hzn.py`: Python driver script for surrogate model training and optimization.
 
 ## How to run
@@ -20,13 +21,13 @@ Physics-based dynamic reduced-order model (ROM), surrogate modeling, and optimiz
 
 The core model is defined in `src/TVSA_CorePhysics_v2.m`.
 
-To reproduce MATLAB-based results, run the following scripts from the repository root or ensure that the `src/` folder is added to the MATLAB path:
+To reproduce MATLAB-based results, ensure that both the src/ and scripts/ folders are added to the MATLAB path, and run the following scripts:
 
 - `scripts/TVSA_Fig2.m`
 - `scripts/TVSA_FigS4.m`
-- `scripts/TVSA_generate_200k_dataset.m`
-
-These scripts internally call the core physics model to generate cycle-resolved results.
+- `scripts/TVSA_make_LHS_13D_dataset.m`
+  
+These scripts internally call the core physics model to generate cycle-resolved results. Before running `TVSA_make_LHS_13D_dataset.m`, ensure that the `src/` folder containing `TVSA_CorePhysics_v2.m` is added to the MATLAB path. The required periodic-state file `tvsa_endpoints_ext2048_rand5000.mat` is provided in the same `scripts/` folder as the dataset-generation script. The script generates 120,000 cycle-resolved cases from 30,000 Latin-hypercube samples, each paired with four feasible initial sorbent states.
 
 ### Python surrogate and optimization workflow
 
@@ -63,6 +64,6 @@ An IPOPT-compatible solver is required for the Pyomo optimization step.
 
 ## Notes
 
-- Large datasets and generated result files are not included in this repository.
+- The 120,000-case dataset is not stored directly in this repository; it can be regenerated using `scripts/TVSA_make_LHS_13D_dataset.m` together with the provided periodic-state results file.
 - File paths in the Python scripts may need to be updated for the local computing environment before execution.
 - The repository is currently maintained as part of software record `SWR-25-178`.
